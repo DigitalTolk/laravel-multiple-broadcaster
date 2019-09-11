@@ -8,18 +8,8 @@ It will just loop through your specified broadcast connections and execute each 
 You must already have configured broadcasting. It is my assumption that you already have a working broadcast configuration that you wish to extend it and support other broadcast driver simultaneously.
 
 ## Installation
-
-1. Add to your `composer.json`
-    ```json
-    {
-        "repositories": [{
-            "type": "composer",
-            "url": "https://packagist.digitaltolk.com"
-        }]
-    }
-    ```
-2. `composer require digitaltolk/multiple-broadcaster`
-3. Next, go into your `config/broadcasting.php` file and add the following lines accordingly:
+1. `composer require digitaltolk/multiple-broadcaster`
+2. Next, go into your `config/broadcasting.php` file and add the following lines accordingly:
     ```php
        return [
            ........
@@ -32,4 +22,7 @@ You must already have configured broadcasting. It is my assumption that you alre
            ]
        ];
      ```
-4. Lastly, on your `.env` file, set the `BROADCAST_DRIVER` to `multiple`.
+3. Lastly, on your `.env` file, set the `BROADCAST_DRIVER` to `multiple`.
+
+## Authors
+* [Jillberth Estillore](https://github.com/jestillore)
