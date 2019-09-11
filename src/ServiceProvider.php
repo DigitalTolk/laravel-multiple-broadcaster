@@ -14,8 +14,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->app->make(BroadcastManager::class)->extend('multiple', function (array $config) {
-            return new MultipleBroadcaster($config, $this->app->make(BroadcastManager::class));
+        $this->app->make(BroadcastManager::class)->extend('multiple', function ($app, array $config) {
+            return new MultipleBroadcaster($config, $app->make(BroadcastManager::class));
         });
     }
 }
