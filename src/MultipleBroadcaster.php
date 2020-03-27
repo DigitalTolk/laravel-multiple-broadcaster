@@ -5,6 +5,8 @@ namespace DigitalTolk\MultipleBroadcaster;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class MultipleBroadcaster extends Broadcaster
 {
@@ -12,6 +14,11 @@ class MultipleBroadcaster extends Broadcaster
      * @var array
      */
     protected $config = [];
+
+    /**
+     * @var bool
+     */
+    protected $safe = true;
 
     /**
      * @var array
@@ -33,6 +40,7 @@ class MultipleBroadcaster extends Broadcaster
     {
         $this->config = $config;
         $this->connections = Arr::get($config, 'connections', []);
+        $this->safe = Arr::get($config, 'safe', $this->safe);
         $this->broadcastManager = $broadcastManager;
     }
 
@@ -82,7 +90,17 @@ class MultipleBroadcaster extends Broadcaster
     public function broadcast(array $channels, $event, array $payload = [])
     {
         foreach ($this->connections as $connection) {
-            $this->broadcastManager->connection($connection)->broadcast($channels, $event, $payload);
+            if ($this->safe) {
+                try {
+                    $this->broadcastManager->connection($connection)->broadcast($channels, $event, $payload);
+                } catch (Exception $exception) {
+                    Log::error('Error broadcasting to ' . $connection, [
+                        'message' => $exception->getMessage()
+                    ]);
+                }
+            } else {
+                $this->broadcastManager->connection($connection)->broadcast($channels, $event, $payload);
+            }
         }
     }
 }
