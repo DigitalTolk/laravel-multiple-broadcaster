@@ -43,6 +43,24 @@ class MultipleBroadcaster extends Broadcaster
         $this->safe = Arr::get($config, 'safe', $this->safe);
         $this->broadcastManager = $broadcastManager;
     }
+    
+    /**
+     * Register a channel authenticator.
+     *
+     * @param  \Illuminate\Contracts\Broadcasting\HasBroadcastChannel|string  $channel
+     * @param  callable|string  $callback
+     * @param  array  $options
+     * @return $this
+     */
+    public function channel($channel, $callback, $options = [])
+    {
+        foreach ($this->connections as $connection)
+        {
+            $this->broadcastManager->connection($connection)->channel($channel, $callback, $options);
+        }
+
+        return $this;
+    }
 
     /**
      * Authenticate the incoming request for a given channel.
