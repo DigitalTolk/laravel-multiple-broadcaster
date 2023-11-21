@@ -1,3 +1,9 @@
-vendor/
+# IDEs
+.idea
+
+# Composer
+/vendor
 composer.lock
-.idea/
+
+# PHPUnit
+.phpunit.result.cache

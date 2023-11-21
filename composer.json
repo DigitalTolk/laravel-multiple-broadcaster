@@ -1,9 +1,6 @@
 {
     "name": "digitaltolk/multiple-broadcaster",
     "description": "Multiple broadcast driver for Laravel",
-    "require": {
-        "illuminate/broadcasting": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -11,9 +8,36 @@
             "email": "ejillberth@gmail.com"
         }
     ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/broadcasting": "^9.0 || ^10.0 || ^11.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "dev-main",
+        "infection/infection": "^0.27.0",
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^8.15",
+        "phpmd/phpmd": "^2.13",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.4",
+        "psalm/plugin-laravel": "^2.8",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "^5.0"
+    },
     "autoload": {
         "psr-4": {
             "DigitalTolk\\MultipleBroadcaster\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DigitalTolk\\MultipleBroadcaster\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "infection/extension-installer": true
         }
     },
     "extra": {
@@ -22,5 +46,22 @@
                 "DigitalTolk\\MultipleBroadcaster\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "full-check": [
+            "@psalm",
+            "@phpstan",
+            "@test:coverage",
+            "@infection"
+        ],
+        "infection": "./vendor/bin/infection --show-mutations --threads=4",
+        "phpmd": "./vendor/bin/phpmd src text phpmd.xml",
+        "phpstan": "./vendor/bin/phpstan",
+        "psalm": "./vendor/bin/psalm --show-info=true",
+        "test": "./vendor/bin/phpunit --display-warnings",
+        "test:coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test"
+        ]
     }
 }
