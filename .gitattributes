@@ -1,0 +1,14 @@
+/.github/           export-ignore
+/.git-hooks/        export-ignore
+/.idea/             export-ignore
+/tests/             export-ignore
+/vendor/            export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/composer.lock      export-ignore
+/phpunit.xml        export-ignore
+/psalm.xml          export-ignore
+/phpcs.xml          export-ignore
+/phpmd.xml          export-ignore
+/phpstan.neon       export-ignore
+/.releaserc.json    export-ignore
